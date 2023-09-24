@@ -1,2 +1,2 @@
 # ping-pong
-first repositori
+
