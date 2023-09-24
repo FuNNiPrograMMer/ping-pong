@@ -1,12 +1,20 @@
 #from
 from pygame import*
+from random import randint
 
 
-#Флаги
+#переменные
 game = True
-speed_x = 10
-speed_y = 10
+grad = randint(-1, 1)
+if grad == -1:
+    speed_x = -5
+    speed_y = -5
+else:
+    speed_x = 5
+    speed_y = 5
 finish = False
+
+
 #класс спрайты
 class GameSprite(sprite.Sprite):
     def __init__(self, player_image, player_x, player_y, player_speed, playerw, playerh):
@@ -22,18 +30,22 @@ class GameSprite(sprite.Sprite):
 
 
 class Player(GameSprite):
+
     def update1(self):
         keys_pressed = key.get_pressed()
         if keys_pressed[K_w] and self.rect.y > 5:
             self.rect.y -= self.speed
         if keys_pressed[K_s] and self.rect.y < 450:
             self.rect.y += self.speed
+
     def update2(self):
         keys_pressed = key.get_pressed()
         if keys_pressed[K_UP] and self.rect.y > 5:
             self.rect.y -= self.speed
         if keys_pressed[K_DOWN] and self.rect.y < 450:
             self.rect.y += self.speed
+
+
 #окошко
 win_width = 1000
 win_height = 600
@@ -48,10 +60,19 @@ font = font.Font(None, 70)
 lose1 = font.render('player 1 lose', True, (255, 0, 0))
 lose2 = font.render('player 2 lose', True, (255, 0, 0))
 
+#музыка
+mixer.init()
+mixer.music.load('fon.mp3')
+mixer.music.play()
+stol = mixer.Sound('ot_stola.wav')
+rocket = mixer.Sound('ot_rocketki.wav')
+over = mixer.Sound('game_over.wav')
+
+
 #экземпляры
 ball = GameSprite('ball.png', 472, 270, 5, 60, 60)
-player1 = Player('p1.jpg', 30, 270, 30, 20, 150)
-player2 = Player('p2.jpg', 950, 270, 30, 20, 150)
+player1 = Player('p1.jpg', 50, 270, 30, 20, 150)
+player2 = Player('p2.jpg', 930, 270, 30, 20, 150)
 
 
 #цикл
@@ -65,21 +86,32 @@ while game:
         ball.rect.x += speed_x
         ball.rect.y += speed_y
 
-        if ball.rect.y > win_height-50 or ball.rect.y<0:
+        if ball.rect.y > win_height-70 or ball.rect.y<0:
+            stol.play()
             speed_y*=-1
 
 
-        if sprite.collide_rect(player1, ball) or sprite.collide_rect(player2, ball):
+        if sprite.collide_rect(player1, ball):
+            rocket.play()
             speed_x*=-1
-            speed_x+=3
-            speed_y+=3
+            speed_x+=2
+            speed_y+=2
+    
+        if sprite.collide_rect(player2, ball):
+            rocket.play()
+            speed_x+=2
+            speed_y+=2
+            speed_x*=-1
+
 
         if ball.rect.x<0:
             finish = True
-            window.blit(lose1, (200, 200))
+            window.blit(lose1, (370, 250))
+            over.play()
         if ball.rect.x>950:
             finish = True
-            window.blit(lose2, (200, 200))
+            window.blit(lose2, (370, 250))
+            over.play()
 
 
 #отрисвка 
@@ -92,4 +124,4 @@ while game:
 
 #концовка
     display.update()
-    time.delay(60)
+    time.delay(25)
