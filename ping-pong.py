@@ -57,8 +57,8 @@ background = transform.scale(image.load('background.png'), (win_width, win_heigh
 #текст
 font.init()
 font = font.Font(None, 70)
-lose1 = font.render('player red lose', True, (255, 0, 0))
-lose2 = font.render('player blue lose', True, (0, 0, 255))
+lose1 = font.render('player blue win', True, (0, 0, 255))
+lose2 = font.render('player red win', True, (255, 0, 0))
 
 #музыка
 mixer.init()
