@@ -13,6 +13,7 @@ else:
     speed_x = 5
     speed_y = 5
 finish = False
+pause = False
 
 
 #класс спрайты
@@ -82,11 +83,14 @@ while game:
             game = False
     keys_pressed = key.get_pressed()
     
-    if keys_pressed[K_ESCAPE]:
-        finish = True
+    if keys_pressed[K_ESCAPE] and pause!=True:
+        finish = True 
+        pause = True
 
-    if keys_pressed[K_SPACE]:
+    if keys_pressed[K_SPACE] and pause==True:
         finish = False
+        pause = False
+
 
     if finish!=True:
         window.blit(background, (0, 0))
