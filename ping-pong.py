@@ -57,8 +57,8 @@ background = transform.scale(image.load('background.png'), (win_width, win_heigh
 #текст
 font.init()
 font = font.Font(None, 70)
-lose1 = font.render('player 1 lose', True, (255, 0, 0))
-lose2 = font.render('player 2 lose', True, (255, 0, 0))
+lose1 = font.render('player red lose', True, (255, 0, 0))
+lose2 = font.render('player blue lose', True, (0, 0, 255))
 
 #музыка
 mixer.init()
@@ -106,11 +106,11 @@ while game:
 
         if ball.rect.x<0:
             finish = True
-            window.blit(lose1, (370, 250))
+            window.blit(lose1, (350, 250))
             over.play()
         if ball.rect.x>950:
             finish = True
-            window.blit(lose2, (370, 250))
+            window.blit(lose2, (350, 250))
             over.play()
 
 
