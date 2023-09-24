@@ -81,6 +81,13 @@ while game:
         if e.type == QUIT:
             game = False
     keys_pressed = key.get_pressed()
+    
+    if keys_pressed[K_ESCAPE]:
+        finish = True
+
+    if keys_pressed[K_SPACE]:
+        finish = False
+
     if finish!=True:
         window.blit(background, (0, 0))
         ball.rect.x += speed_x
